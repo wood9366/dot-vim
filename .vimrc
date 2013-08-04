@@ -23,7 +23,7 @@ set guioptions-=L
 set guioptions-=r
 
 " search
-set ignorecase
+set ic
 set smartcase
 set incsearch
 
@@ -31,9 +31,7 @@ set incsearch
 set cot+=longest
 set infercase
 
-" operation
-set notildeop
-
+" operation set notildeop 
 if has("gui")
 	set guifont=Menlo
 	set guifontwide=Hei
@@ -58,11 +56,12 @@ Bundle 'ZenCoding.vim'
 Bundle 'The-NERD-tree'
 Bundle 'EasyMotion'
 Bundle 'tComment'
-Bundle 'Command-T'
 Bundle 'rails.vim'
+Bundle 'ctrlp.vim'
 
-filetype plugin indent on
-syntax enable
+filetype plugin on
+filetype indent on
+" syntax enable
 
 " scheme
 colorscheme molokai
@@ -77,3 +76,9 @@ au FileType cs set omnifunc=syntaxcomplete#Complete
 
 " key map
 map <leader>nt :NERDTree<CR>
+
+" buffer
+set wildmenu
+set hidden "in order to switch between buffers with unsaved change 
+
+set textwidth=80
