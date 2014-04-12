@@ -1,18 +1,13 @@
 " use vim
 set nocompatible
-let mapleader = ","
+" let mapleader = ","
 
 " backspacing funciton for insert mode
 set backspace=indent,eol,start
 
 " tab
-set shiftwidth=2
-set ts=2
-" set expandtab
-" set autoindent
-" set list
-" set listchars=tab:>.
-
+set ts=4 sts=4 sw=4 expandtab
+set listchars=tab:▸\ ,eol:¬
 " ui
 set cmdheight=1
 set ruler
@@ -36,16 +31,15 @@ if has("gui")
 	set guifont=Menlo
 	set guifontwide=Hei
 
-	if &t_Co > 2
-		syntax on
-		set hlsearch
-	endif
+	syntax on
+	set hlsearch
 endif
 
 " plug-ins
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'vundle'
 Bundle 'molokai'
 Bundle 'vimwiki'
 Bundle 'snipMate'
@@ -63,6 +57,9 @@ Bundle "pangloss/vim-javascript"
 Bundle 'JavaScript-syntax'
 Bundle 'mileszs/ack.vim'
 Bundle 'vim-scripts/taglist.vim'
+Bundle 'vim-coffee-script'
+Bundle 'marijnh/tern_for_vim'
+Bundle 'godlygeek/tabular'
 
 filetype plugin on
 filetype indent on
@@ -78,7 +75,7 @@ set fileencodings=ucs-bom,utf8,prc
 
 " perl
 " au FileType perl set complete-=i
-au FileType perl map <leader>rr :!perl %<CR>
+au FileType perl map <leader>rr :!perl '%'<CR>
 
 " c# complete
 au FileType cs set omnifunc=syntaxcomplete#Complete
@@ -102,16 +99,19 @@ autocmd BufRead *.py nmap <leader>rr :!python %<CR>
 let g:vimim_cloud = 'baidu,sogou,qq,google'  
 let g:vimim_map = 'c-bslash'  
 
-" ctags
-let Tlist_JS_Settings = 'javascript;s:string;a:array;o:object;f:function'
-let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+let g:tern_map_keys=1
+let g:tern_show_argument_hints='on_hold'
 
 " latex
 " set grepprg=grep\ -nH\ $*
 " let g:tex_flavor='latex'
 
 " vim wiki
-let g:vimwiki_list = [{'path': '~/Box Documents/wiki/source/', 'path_html': '~/Box Documents/wiki/html/'}]
+let g:vimwiki_list = [
+	\{'path': '~/Box Documents/wiki/source/', 'path_html': '~/Box Documents/wiki/html/'},
+	\{'path': '~/Documents/wiki-lionant/source/', 'path_html': '~/Documents/wiki-lionant/html/'}
+\ ]
+let g:vimwiki_folding = 'syntax'
 au FileType vimwiki map <leader>rr :Vimwiki2HTMLBrowse<CR>
 au FileType vimwiki map <leader>ra :VimwikiAll2HTML<CR>
 au FileType vimwiki map <leader>rc :Vimwiki2HTML<CR>
