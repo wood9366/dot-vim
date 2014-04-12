@@ -5,6 +5,20 @@ set nocompatible
 " backspacing funciton for insert mode
 set backspace=indent,eol,start
 
+" chinese
+set enc=utf-8
+set fileencodings=utf-8,chinese,latin-1
+set fileencoding=utf-8
+
+if has("win32")
+	source $VIMRUNTIME/delmenu.vim
+	source $VIMRUNTIME/menu.vim
+
+	language messages zh_CN.utf-8
+
+	:let $PATH.=";c:/cygwin/bin"
+endif
+
 " tab
 set ts=4 sts=4 sw=4 expandtab
 set listchars=tab:▸\ ,eol:¬
@@ -28,8 +42,15 @@ set infercase
 
 " operation set notildeop 
 if has("gui")
-	set guifont=Menlo
-	set guifontwide=Hei
+	if has("unix")
+		if system("uname") == "Darwin\n"
+			set guifont=Menlo
+			set guifontwide=Hei
+		endif
+	elseif has("win32")
+		set guifont=consolas
+		set guifontwide=consolas
+	endif
 
 	syntax on
 	set hlsearch
@@ -67,11 +88,6 @@ filetype indent on
 
 " scheme
 colorscheme molokai
-
-" chinese
-set enc=utf-8
-set fileencoding=utf-8
-set fileencodings=ucs-bom,utf8,prc
 
 " perl
 " au FileType perl set complete-=i
