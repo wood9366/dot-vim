@@ -51,9 +51,6 @@ if has("gui")
 		set guifont=consolas
 		set guifontwide=consolas
 	endif
-
-	syntax on
-	set hlsearch
 endif
 
 " plug-ins
@@ -70,21 +67,24 @@ Bundle 'ZenCoding.vim'
 Bundle 'The-NERD-tree'
 Bundle 'EasyMotion'
 Bundle 'tComment'
-Bundle 'rails.vim'
 Bundle 'ctrlp.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'VimIM'
-Bundle "pangloss/vim-javascript"
-Bundle 'JavaScript-syntax'
 Bundle 'mileszs/ack.vim'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'vim-coffee-script'
-Bundle 'marijnh/tern_for_vim'
 Bundle 'godlygeek/tabular'
+Bundle 'pangloss/vim-javascript'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'JavaScript-Indent'
+Bundle 'marijnh/tern_for_vim'
+Bundle 'moll/vim-node'
+Bundle 'tpope/vim-fugitive'
+Bundle 'bling/vim-airline'
+Bundle 'majutsushi/tagbar'
 
 filetype plugin on
 filetype indent on
-" syntax enable
+syntax on
+set hlsearch
 
 " scheme
 colorscheme molokai
@@ -131,3 +131,26 @@ let g:vimwiki_folding = 'syntax'
 au FileType vimwiki map <leader>rr :Vimwiki2HTMLBrowse<CR>
 au FileType vimwiki map <leader>ra :VimwikiAll2HTML<CR>
 au FileType vimwiki map <leader>rc :Vimwiki2HTML<CR>
+
+" air line
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" tagbar
+" let g:tagbar_ctags_bin='//bin/ctags'
+let g:tagbar_width=26
+noremap <silent> <leader>y :TagbarToggle<CR>
