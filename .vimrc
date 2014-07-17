@@ -30,6 +30,8 @@ set statusline=[%02n]\ %f\ %(\[%M%R%H]%)=\ %4l,%02c%2V\ %P%*
 set showcmd
 set guioptions-=L
 set guioptions-=r
+set nu
+set rnu
 
 " search
 set ic
@@ -54,40 +56,51 @@ if has("gui")
 endif
 
 " plug-ins
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+filetype off
 
-Bundle 'vundle'
-Bundle 'molokai'
-Bundle 'vimwiki'
-Bundle 'snipMate'
-Bundle 'surround.vim'
-Bundle 'perl-support.vim'
-Bundle 'ZenCoding.vim'
-Bundle 'The-NERD-tree'
-Bundle 'EasyMotion'
-Bundle 'tComment'
-Bundle 'ctrlp.vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'VimIM'
-Bundle 'mileszs/ack.vim'
-Bundle 'godlygeek/tabular'
-Bundle 'pangloss/vim-javascript'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'JavaScript-Indent'
-Bundle 'marijnh/tern_for_vim'
-Bundle 'moll/vim-node'
-Bundle 'tpope/vim-fugitive'
-Bundle 'bling/vim-airline'
-Bundle 'majutsushi/tagbar'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-filetype plugin on
-filetype indent on
+Plugin 'gmarik/Vundle.vim'
+Plugin 'molokai'
+Plugin 'vimwiki'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'surround.vim'
+Plugin 'perl-support.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'The-NERD-tree'
+Plugin 'EasyMotion'
+Plugin 'tComment'
+Plugin 'ctrlp.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'VimIM'
+Plugin 'mileszs/ack.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'JavaScript-Indent'
+Plugin 'marijnh/tern_for_vim'
+Plugin 'moll/vim-node'
+Plugin 'tpope/vim-fugitive'
+Plugin 'bling/vim-airline'
+Plugin 'majutsushi/tagbar'
+Plugin 'digitaltoad/vim-jade'
+Plugin 'Valloric/YouCompleteMe'
+
+call vundle#end()
+filetype plugin indent on
+
 syntax on
 set hlsearch
 
 " scheme
 colorscheme molokai
+
+" ultisnaps
+let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " perl
 " au FileType perl set complete-=i
@@ -116,7 +129,7 @@ let g:vimim_cloud = 'baidu,sogou,qq,google'
 let g:vimim_map = 'c-bslash'  
 
 let g:tern_map_keys=1
-let g:tern_show_argument_hints='on_hold'
+" let g:tern_show_argument_hints='on_hold'
 
 " latex
 " set grepprg=grep\ -nH\ $*
@@ -124,8 +137,7 @@ let g:tern_show_argument_hints='on_hold'
 
 " vim wiki
 let g:vimwiki_list = [
-	\{'path': '~/Box Documents/wiki/source/', 'path_html': '~/Box Documents/wiki/html/'},
-	\{'path': '~/Documents/wiki-lionant/source/', 'path_html': '~/Documents/wiki-lionant/html/'}
+	\{'path': '~/OneDrive/wiki/source/', 'path_html': '~/OneDrive/wiki/html/'},
 \ ]
 let g:vimwiki_folding = 'syntax'
 au FileType vimwiki map <leader>rr :Vimwiki2HTMLBrowse<CR>
@@ -152,5 +164,10 @@ let g:airline_symbols.whitespace = 'Ξ'
 
 " tagbar
 " let g:tagbar_ctags_bin='//bin/ctags'
-let g:tagbar_width=26
+let g:tagbar_width = 26
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
 noremap <silent> <leader>y :TagbarToggle<CR>
+
+" Ack
+map <leader>.js :Ack --js '\b<C-R><C-W>\b'<CR>
