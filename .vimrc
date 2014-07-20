@@ -62,7 +62,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-Plugin 'molokai'
 Plugin 'vimwiki'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -87,9 +86,19 @@ Plugin 'bling/vim-airline'
 Plugin 'majutsushi/tagbar'
 Plugin 'digitaltoad/vim-jade'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'flazz/vim-colorschemes'
 
 call vundle#end()
 filetype plugin indent on
+
+" latex
+set rtp+=~/.vim/latex
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+
+if has("unix") && match(system("uname"),'Darwin') != -1
+    let g:Tex_ViewRule_pdf = 'open -a Preview.app' 
+endif   
 
 syntax on
 set hlsearch
