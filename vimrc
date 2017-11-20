@@ -293,3 +293,13 @@ function! SwitchCppH()
 endfunction
 
 nmap <leader>jj :call SwitchCppH()<CR>
+
+" local local config if exist
+function! LoadLocalConfig()
+    let s:files = glob("$HOME/.vim/local/*.vim", v:true, v:true)
+    for s:file in s:files
+        exe 'source' s:file
+    endfor
+endfunction
+
+call LoadLocalConfig()
