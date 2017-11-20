@@ -1,15 +1,85 @@
-" use vim
+" use vim not vi
 set nocompatible
-" let mapleader = ","
+
+" setup plugins
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+" powerful status line
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" find file quickly
+Plugin 'kien/ctrlp.vim'
+
+" file/directory manager
+Plugin 'scrooloose/nerdtree'
+
+" comment/uncomment code
+Plugin 'scrooloose/nerdcommenter'
+
+" insert surround char with motion key
+Plugin 'tpope/vim-surround'
+
+" git support
+Plugin 'tpope/vim-fugitive'
+
+" check & highlight syntax error realtime
+Plugin 'vim-syntastic/syntastic'
+
+" solarized color theme
+Plugin 'altercation/vim-colors-solarized'
+
+" add filetype glyphs for other plugins
+Plugin 'ryanoasis/vim-devicons'
+
+" auto complete
+Plugin 'Valloric/YouCompleteMe'
+
+" code snippet
+" Plugin 'SirVer/ultisnips'
+" Plugin 'honza/vim-snippets'
+
+" move cursor quickly
+" Plugin 'EasyMotion'
+
+" java script support
+" Plugin 'pangloss/vim-javascript'
+" Plugin 'jelera/vim-javascript-syntax'
+" Plugin 'JavaScript-Indent'
+
+" nodejs support
+" Plugin 'marijnh/tern_for_vim'
+" Plugin 'moll/vim-node'
+
+" syntax highlight for jade template engine
+" Plugin 'digitaltoad/vim-jade'
+
+" vim wiki
+" Plugin 'vimwiki/vimwiki'
+
+call vundle#end()
+filetype plugin indent on
 
 " backspacing funciton for insert mode
 set backspace=indent,eol,start
 
-" chinese
+" chinese support
 set enc=utf-8
-set fileencodings=utf-8,chinese,latin-1
+set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set fileencoding=utf-8
 
+" setup font
+if has('gui')
+    set guifont=DejaVuSansMono\ Nerd\ Font:h12
+    set guifontwide=WenQuanYi\ Micro\ Hei:h12
+endif
+
+" menu support chinese for win32
 if has("win32")
 	source $VIMRUNTIME/delmenu.vim
 	source $VIMRUNTIME/menu.vim
@@ -19,97 +89,116 @@ if has("win32")
 	:let $PATH.=";c:/cygwin/bin"
 endif
 
-" tab
-set ts=4 sts=4 sw=4 expandtab
+" tab width 4
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+" change tab to space
+set expandtab
+
+" change tab and line wrap visual char
 set listchars=tab:▸\ ,eol:¬
-" ui
+
+" show tab and link wrap char
+set list
+
+" command line window height
 set cmdheight=1
+
+" show cursor row and column
 set ruler
+
+" always show status bar for each window
 set laststatus=2
-set statusline=[%02n]\ %f\ %(\[%M%R%H]%)=\ %4l,%02c%2V\ %P%*
+
+" status line format, use airline instead
+" set statusline=[%02n]\ %f\ %(\[%M%R%H]%)=\ %4l,%02c%2V\ %P%*
+
+" ? show command last line
 set showcmd
-set guioptions-=L
-set guioptions-=r
+
+" ? show/hide gui scrollbar
+if has('gui')
+    set guioptions-=L
+    set guioptions-=r
+endif
+
+" show relative line number
 set nu
 set rnu
 
 " search
-set ic
+" ignore case search
+set ignorecase
+" case sensitive if search contains upper case char
 set smartcase
+" when search show where match immediate
 set incsearch
-
-" complete
-set cot+=longest
-set infercase
-
-" operation set notildeop 
-if has("gui")
-	if has("unix")
-		if system("uname") == "Darwin\n"
-			set guifont=Menlo
-			set guifontwide=Hei
-		endif
-	elseif has("win32")
-		set guifont=consolas
-		set guifontwide=consolas
-	endif
-endif
-
-" plug-ins
-filetype off
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'gmarik/Vundle.vim'
-Plugin 'vimwiki'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'surround.vim'
-Plugin 'perl-support.vim'
-Plugin 'mattn/emmet-vim'
-Plugin 'The-NERD-tree'
-Plugin 'EasyMotion'
-Plugin 'tComment'
-Plugin 'ctrlp.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'VimIM'
-Plugin 'mileszs/ack.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'JavaScript-Indent'
-Plugin 'marijnh/tern_for_vim'
-Plugin 'moll/vim-node'
-Plugin 'tpope/vim-fugitive'
-Plugin 'bling/vim-airline'
-Plugin 'majutsushi/tagbar'
-Plugin 'digitaltoad/vim-jade'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'flazz/vim-colorschemes'
-
-call vundle#end()
-filetype plugin indent on
-
-" latex
-set rtp+=~/.vim/latex
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
-
-if has("unix") && match(system("uname"),'Darwin') != -1
-    let g:Tex_ViewRule_pdf = 'open -a Preview.app' 
-endif   
-
-syntax on
+" highlight all match search
 set hlsearch
 
-" scheme
-colorscheme molokai
+" ? internal complete config
+" set cot+=longest
+" set infercase
+
+" change leader key to ,
+let mapleader = ","
+
+" map kj to esc 
+imap kj <esc>
+
+" setup term for tmux
+if exists('$TMUX')
+	set term=screen-256color
+endif
+
+" setup cursor display different in normal and insert mode
+if exists('$TMUX')
+	let &t_SI = "\<Esc>[3 q"
+	let &t_EI = "\<Esc>[0 q"
+else
+	let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+	let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+" syntax highlight
+syntax enable
+
+" solarized color scheme
+set background=dark
+colorscheme solarized
+exe "hi! SpecialKey ctermbg=NONE guibg=NONE"
+
+" airline
+let g:airline_powerline_fonts = 1
+
+" nerd commenter
+let g:NERDCreateDefaultMappings = 0
+let g:NERDDefaultAlign = 'left'
+let g:NERDSpaceDelims = 1
+let g:NERDCommentEmptyLines = 1
+map <C-_> <plug>NERDCommenterToggle
+
+" nerd tree
+nmap <leader>nt :NERDTreeToggle<CR>
+
+" ? latex
+" set rtp+=~/.vim/latex
+" set grepprg=grep\ -nH\ $*
+" let g:tex_flavor='latex'
+
+" if has("unix") && match(system("uname"),'Darwin') != -1
+"     let g:Tex_ViewRule_pdf = 'open -a Preview.app' 
+" endif   
+"
+" set grepprg=grep\ -nH\ $*
+" let g:tex_flavor='latex'
 
 " ultisnaps
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" let g:UltiSnipsExpandTrigger="<c-k>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " perl
 " au FileType perl set complete-=i
@@ -118,65 +207,47 @@ au FileType perl map <leader>rr :!perl '%'<CR>
 " c# complete
 au FileType cs set omnifunc=syntaxcomplete#Complete
 
-" key map
-map <leader>nt :NERDTree<CR>
-imap jj <esc>
-
-" buffer
+" enhance command line completion
 set wildmenu
-set hidden "in order to switch between buffers with unsaved change 
 
-" set textwidth=80
+" ? in order to switch between buffers with unsaved change 
+" set hidden 
+
+" max width
+set textwidth=80
 
 " python
+" bind rr to compile current file and send errors into list with specific format
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 autocmd BufRead *.py nmap <leader>rr :!python %<CR>
 
-" vimim
-let g:vimim_cloud = 'baidu,sogou,qq,google'  
-let g:vimim_map = 'c-bslash'  
-
-let g:tern_map_keys=1
+" tern
+" let g:tern_map_keys=1
 " let g:tern_show_argument_hints='on_hold'
 
-" latex
-" set grepprg=grep\ -nH\ $*
-" let g:tex_flavor='latex'
-
 " vim wiki
-let g:vimwiki_list = [
-	\{'path': '~/OneDrive/wiki/source/', 'path_html': '~/OneDrive/wiki/html/'},
-\ ]
-let g:vimwiki_folding = 'syntax'
-au FileType vimwiki map <leader>rr :Vimwiki2HTMLBrowse<CR>
-au FileType vimwiki map <leader>ra :VimwikiAll2HTML<CR>
-au FileType vimwiki map <leader>rc :Vimwiki2HTML<CR>
+" let g:vimwiki_list = [
+"     \{'path': '~/OneDrive/wiki/source/', 'path_html': '~/OneDrive/wiki/html/'},
+" \ ]
+" let g:vimwiki_folding = 'syntax'
+" au FileType vimwiki map <leader>rr :Vimwiki2HTMLBrowse<CR>
+" au FileType vimwiki map <leader>ra :VimwikiAll2HTML<CR>
+" au FileType vimwiki map <leader>rc :Vimwiki2HTML<CR>
 
-" air line
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#tabline#enabled = 1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" tagbar
+" ? tagbar
 " let g:tagbar_ctags_bin='//bin/ctags'
-let g:tagbar_width = 26
-let g:tagbar_autoclose = 1
-let g:tagbar_autofocus = 1
-noremap <silent> <leader>y :TagbarToggle<CR>
+" let g:tagbar_width = 26
+" let g:tagbar_autoclose = 1
+" let g:tagbar_autofocus = 1
+" noremap <silent> <leader>y :TagbarToggle<CR>
 
-" Ack
-map <leader>.js :Ack --js '\b<C-R><C-W>\b'<CR>
+" quickfix, localtion key bind
+nmap <leader>cn :cn<CR>
+nmap <leader>cp :cp<CR>
+nmap <leader>cw :cw<CR>
+nmap <leader>cs :ccl<CR>
+nmap <leader>ln :lne<CR>
+nmap <leader>lp :lp<CR>
+nmap <leader>lw :lw<CR>
+nmap <leader>ls :lcl<CR>
