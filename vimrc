@@ -40,6 +40,9 @@ Plugin 'ryanoasis/vim-devicons'
 " auto complete
 Plugin 'Valloric/YouCompleteMe'
 
+" code alignment
+Plugin 'godlygeek/tabular'
+
 " code snippet
 " Plugin 'SirVer/ultisnips'
 " Plugin 'honza/vim-snippets'
@@ -170,6 +173,12 @@ set background=dark
 colorscheme solarized
 exe "hi! SpecialKey ctermbg=NONE guibg=NONE"
 
+" code fold by syntax
+set foldmethod=syntax
+
+" add common ignore files for vimgrep
+set wildignore=*.o,*.so,*.obj
+
 " airline
 let g:airline_powerline_fonts = 1
 
@@ -182,6 +191,14 @@ map <C-_> <plug>NERDCommenterToggle
 
 " nerd tree
 nmap <leader>nt :NERDTreeToggle<CR>
+
+" git
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gw :Gwrite<CR>
+nmap <leader>gd :Gdiff<CR>
+
+" enable tag search in ctrlp
+let g:ctrlp_extensions = ['tag']
 
 " ? latex
 " set rtp+=~/.vim/latex
@@ -242,6 +259,9 @@ autocmd BufRead *.py nmap <leader>rr :!python %<CR>
 " let g:tagbar_autofocus = 1
 " noremap <silent> <leader>y :TagbarToggle<CR>
 
+" ycm
+let g:ycm_always_populate_location_list = 1
+
 " quickfix, localtion key bind
 nmap <leader>cn :cn<CR>
 nmap <leader>cp :cp<CR>
@@ -251,3 +271,25 @@ nmap <leader>ln :lne<CR>
 nmap <leader>lp :lp<CR>
 nmap <leader>lw :lw<CR>
 nmap <leader>ls :lcl<CR>
+
+" switch h, cpp
+function! SwitchCppH()
+	let s:root = expand('%:r')
+	let s:ext = expand('%:e')
+
+	if s:ext == 'h'
+		let s:path = s:root . '.cpp'
+
+		if filereadable(s:path)
+			exe 'e' s:path
+		endif
+	elseif s:ext == 'cpp'
+		let s:path = s:root . '.h'
+
+		if filereadable(s:path)
+			exe 'e' s:path
+		endif
+	endif
+endfunction
+
+nmap <leader>jj :call SwitchCppH()<CR>
